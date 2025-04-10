@@ -1,5 +1,5 @@
 import { connectDb } from './connectDb.js';
-import Product from '../models/product.model';
+import Product from '../models/product.model.js';
 
 export default async function handler(req, res) {
   await connectDb(); // Ensure that MongoDB is connected
