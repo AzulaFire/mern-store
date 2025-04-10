@@ -51,7 +51,7 @@ export default async function handler(req, res) {
             .json({ success: false, message: 'Product ID is required' });
 
         const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
-          new: true,
+          new: true, // This ensures the updated document is returned
         });
 
         if (!updatedProduct) {
@@ -60,7 +60,7 @@ export default async function handler(req, res) {
             .json({ success: false, message: 'Product not found' });
         }
 
-        return res.status(200).json(updatedProduct);
+        return res.status(200).json(updatedProduct); // Return the updated product, not just a success message
       } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
       }
