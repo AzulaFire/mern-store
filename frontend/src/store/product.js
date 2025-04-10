@@ -44,16 +44,14 @@ export const useProductStore = create((set) => ({
       body: JSON.stringify(updatedProduct),
     });
     const data = await res.json();
-
     if (!data.success) return { success: false, message: data.message };
 
-    // Use the updated product returned from the API
     set((state) => ({
       products: state.products.map((product) =>
-        product._id === pid ? { ...product, ...data } : product
+        product._id === pid ? data : product
       ),
     }));
 
-    return { success: true, message: 'Product updated successfully' };
+    return { success: true, message: data.message };
   },
 }));
