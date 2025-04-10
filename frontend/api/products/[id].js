@@ -1,4 +1,4 @@
-import { connectDb } from '../../utils/db.js'; // Import the connectDb function
+import connectDb from '../../utils/db.js';
 import Product from '../../models/product.model';
 import dotenv from 'dotenv';
 
