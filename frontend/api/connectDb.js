@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// eslint-disable-next-line no-undef
 const MONGO_URI = process.env.VITE_MONGO_URI;
 
 if (!MONGO_URI) {
