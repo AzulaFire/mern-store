@@ -60,9 +60,7 @@ export default async function handler(req, res) {
             .json({ success: false, message: 'Product not found' });
         }
 
-        return res
-          .status(200)
-          .json({ success: true, message: 'Product updated' });
+        return res.status(200).json(updatedProduct);
       } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
       }
