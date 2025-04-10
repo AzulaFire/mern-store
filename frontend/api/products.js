@@ -4,7 +4,7 @@ import Product from '../models/product.model.js';
 export default async function handler(req, res) {
   await connectDb(); // Ensure that MongoDB is connected
 
-  const { id } = req.query; // Extract `id` from query params
+  const { id } = req.query || req.body;
 
   switch (req.method) {
     case 'GET':
