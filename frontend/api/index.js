@@ -7,7 +7,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const apiUrl = import.meta.env.VITE_MONGO_URI;
+const apiUrl =
+  'mongodb+srv://jhornjrwork:YZvKDC087XNhUqjK@cluster0.gqlcy8y.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 const app = express();
 
