@@ -52,7 +52,7 @@ export const useProductStore = create((set) => ({
 
     set((state) => ({
       products: state.products.map((product) =>
-        product._id === pid ? data : product
+        product._id === pid ? data.product : product
       ),
     }));
 

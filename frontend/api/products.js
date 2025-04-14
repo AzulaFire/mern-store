@@ -2,14 +2,13 @@ import { connectDb } from './connectDb.js';
 import Product from '../models/product.model.js';
 
 export default async function handler(req, res) {
-  await connectDb(); // Ensure that MongoDB is connected
+  await connectDb();
 
   const { id } = req.query || req.body || req.params;
 
   switch (req.method) {
     case 'GET':
       if (id) {
-        // Fetch a single product by ID
         try {
           const product = await Product.findById(id);
           if (!product) {
@@ -17,14 +16,13 @@ export default async function handler(req, res) {
               .status(404)
               .json({ success: false, message: 'Product not found' });
           }
-          return res.status(200).json(product);
+          return res.status(200).json({ success: true, product });
         } catch (error) {
           return res
             .status(500)
             .json({ success: false, message: error.message });
         }
       } else {
-        // Fetch all products
         try {
           const products = await Product.find({});
           return res.status(200).json(products);
@@ -51,7 +49,7 @@ export default async function handler(req, res) {
             .json({ success: false, message: 'Product ID is required' });
 
         const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
-          new: true, // This ensures the updated document is returned
+          new: true,
         });
 
         if (!updatedProduct) {
@@ -60,7 +58,11 @@ export default async function handler(req, res) {
             .json({ success: false, message: 'Product not found' });
         }
 
-        return res.status(200).json(updatedProduct); // Return the updated product, not just a success message
+        return res.status(200).json({
+          success: true,
+          message: 'Product updated successfully',
+          product: updatedProduct,
+        });
       } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
       }
