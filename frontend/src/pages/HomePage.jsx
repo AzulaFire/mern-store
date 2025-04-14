@@ -1,16 +1,28 @@
-import { Container, SimpleGrid, Text, VStack } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import {
+  Container,
+  SimpleGrid,
+  Text,
+  VStack,
+  Spinner,
+  Center,
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProductStore } from '../store/product';
 import ProductCard from '../components/ProductCard';
 
 const HomePage = () => {
   const { fetchProducts, products } = useProductStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProducts();
+    const loadProducts = async () => {
+      setLoading(true);
+      await fetchProducts();
+      setLoading(false);
+    };
+    loadProducts();
   }, [fetchProducts]);
-  console.log('products', products);
 
   return (
     <Container maxW='container.xl' py={12}>
@@ -25,21 +37,20 @@ const HomePage = () => {
           Current Products 🚀
         </Text>
 
-        <SimpleGrid
-          columns={{
-            base: 1,
-            md: 2,
-            lg: 3,
-          }}
-          spacing={10}
-          w={'full'}
-        >
-          {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-        </SimpleGrid>
-
-        {products.length === 0 && (
+        {loading ? (
+          <Center w='full' py={20} flexDirection='column'>
+            <Spinner size='xl' thickness='4px' color='blue.500' />
+            <Text mt={4} fontSize='lg' color='gray.600'>
+              Loading products...
+            </Text>
+          </Center>
+        ) : products.length > 0 ? (
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} w='full'>
+            {products.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </SimpleGrid>
+        ) : (
           <Text
             fontSize='xl'
             textAlign={'center'}
@@ -62,4 +73,5 @@ const HomePage = () => {
     </Container>
   );
 };
+
 export default HomePage;
